@@ -1,0 +1,30 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[[source]]
+name = "pytorch"
+url = "https://download.pytorch.org/whl/cu113/"
+verify_ssl = true
+
+[packages]
+jupyter = "==1.0.0"
+torch = {index = "pytorch",version = "==1.11.0"}
+torchaudio = {index ="pytorch", version= "==0.11.0"}
+torchvision = {index ="pytorch", version= "==0.12.0"}
+# Error text: Looking in indexes: https://data.pyg.org/whl/torch-1.11.0+cu113.html
+torch-sparse = {version= "==0.6.13", file= "https://data.pyg.org/whl/torch-1.11.0+cu113/torch_sparse-0.6.13-cp39-cp39-win_amd64.whl"}
+torch-scatter = {version= "==2.0.9", file= "https://data.pyg.org/whl/torch-1.11.0+cu113/torch_scatter-2.0.9-cp39-cp39-win_amd64.whl"}
+torch-cluster = {version= "==1.6.0", file= "https://data.pyg.org/whl/torch-1.11.0+cu113/torch_cluster-1.6.0-cp39-cp39-win_amd64.whl"}
+torch-spline-conv = {version= "==1.2.1", file="https://data.pyg.org/whl/torch-1.11.0+cu113/torch_spline_conv-1.2.1-cp39-cp39-win_amd64.whl"}
+torch-geometric = {version= "==2.0.4"}
+pyyaml = "==6.0"
+sentence-transformers = "==2.2.0"
+
+[dev-packages]
+pytest = "==7.1.1"
+black = "==22.1.0"
+
+[requires]
+python_version = "3.9"
