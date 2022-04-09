@@ -16,10 +16,7 @@ class SequenceEncoder(Encoder):
     @torch.no_grad()
     def __call__(self, values: ndarray, **kwargs) -> Tensor:
         x = self.model.encode(
-            values,
-            show_progress_bar=True,
-            convert_to_tensor=True,
-            device=self.device,
-            **kwargs
+            values.tolist(), show_progress_bar=True, convert_to_tensor=True, **kwargs
         )
+        assert isinstance(x, Tensor)
         return x

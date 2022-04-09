@@ -44,11 +44,11 @@ def test_parse_sysmon_config():
         <OriginalFileName name="technique_id=T1016,technique_name=System Network Configuration Discovery" condition="is">route.exe</OriginalFileName>
     """
     )
-    assert techniques == [
+    assert tuple(techniques) == (
         ("T1016", "System Network Configuration Discovery"),
         ("T1218.002", "rundll32.exe"),
         ("T1546.008", "Windows Error Reporting"),
-    ]
+    )
 
 
 def test_generate_mapping_with_identity_as_key():
