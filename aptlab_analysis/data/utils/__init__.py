@@ -1,4 +1,4 @@
-from typing import Dict, Iterable, Iterator, List, Union, Tuple
+from typing import Dict, Iterable, Iterator, List, Tuple
 import re
 
 
@@ -33,8 +33,8 @@ def parse_sysmon_config(sysmon_config_content: str) -> Iterator[Tuple[str, str]]
 
 
 def generate_mapping_with_identity_as_key(
-    identities: Iterable[Union[int, str]], has_None_class: bool = False
-) -> Dict[Union[int, str], int]:
+    identities: Iterable[str], has_None_class: bool = False
+) -> Dict[str, int]:
     offset = 1 if has_None_class else 0
     mapping = {identity: index + offset for index, identity in enumerate(identities)}
     if has_None_class:
@@ -43,8 +43,8 @@ def generate_mapping_with_identity_as_key(
 
 
 def generate_mapping_with_index_as_key(
-    identities: Iterable[Union[int, str]], has_None_class: bool = False
-) -> Dict[int, Union[int, str]]:
+    identities: Iterable[str], has_None_class: bool = False
+) -> Dict[int, str]:
     offset = 1 if has_None_class else 0
     mapping = {index + offset: identity for index, identity in enumerate(identities)}
     if has_None_class:

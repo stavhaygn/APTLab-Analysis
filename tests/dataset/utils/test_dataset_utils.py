@@ -1,4 +1,3 @@
-import pytest
 import torch
 from aptlab_analysis.dataset.utils import (
     load_provenance_graph_schema,
@@ -23,14 +22,14 @@ def test_load_node_csv():
         identity_column="processId",
         column_encoder_mapping=column_encoder_mapping,
     )
-
+    assert node_x is not None
     assert node_x.equal(torch.tensor([[0, 0, 0, 1], [0, 0, 1, 0]]))
-    assert node_identity_mapping == {43: 0, 57: 1}
+    assert node_identity_mapping == {"43": 0, "57": 1}
 
 
 def test_load_edge_csv():
-    process_identity_mapping = {43: 0, 57: 1}
-    module_identity_mapping = {412: 0}
+    process_identity_mapping = {"43": 0, "57": 1}
+    module_identity_mapping = {"412": 0}
     technique_id_mapping = {"T1016": 0, "T1033": 1, "T1047": 2}
     column_encoder_mapping = {"rule_technique_id": ClassEncoder(technique_id_mapping)}
 
@@ -44,4 +43,5 @@ def test_load_edge_csv():
     )
 
     assert edge_index.equal(torch.tensor([[1, 0], [0, 0]]))
+    assert edge_attr is not None
     assert edge_attr.equal(torch.tensor([[0, 0, 1], [0, 0, 1]]))
