@@ -1,0 +1,84 @@
+- name: User created Process
+  source: user
+  relationship: created
+  target: process
+- name: Process created Process
+  source: process
+  relationship: created
+  target: process
+- name: Process modified File
+  source: process
+  relationship: modified
+  target: file
+- name: Process connected to Host
+  source: process
+  relationship: connected to
+  target: host
+- name: User connected to Host
+  source: user
+  relationship: connected to
+  target: host
+- name: User terminated Process
+  source: user
+  relationship: terminated
+  target: process
+- name: Driver loaded
+  source: driver
+  relationship: loaded
+  target: None
+- name: Process loaded Module
+  source: process
+  relationship: loaded
+  target: module
+- name: User loaded Module
+  source: user
+  relationship: loaded
+  target: module
+- name: Process created Thread
+  source: process
+  relationship: created
+  target: thread
+- name: Process modified Process
+  source: process
+  relationship: modified
+  target: process
+- name: Process accessed Process
+  source: process
+  relationship: accessed
+  target: process
+- name: Process requested access to Process
+  source: process
+  relationship: requested access to
+  target: process
+- name: Process created File
+  source: process
+  relationship: created
+  target: file
+- name: Process created registry
+  source: process
+  relationship: created
+  target: registry
+- name: Process deleted registry
+  source: process
+  relationship: deleted
+  target: registry
+- name: Process modified registry
+  source: process
+  relationship: modified
+  target: registry
+# - name: User created Wmi object
+#   source: user
+#   relationship: created
+#   target: wmi
+- name: Process queried DNS
+  source: process
+  relationship: queried
+  target: dns
+- name: Process deleted File
+  source: process
+  relationship: deleted
+  target: file
+- name: User deleted File
+  source: user
+  relationship: deleted
+  target: file

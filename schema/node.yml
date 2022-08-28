@@ -1,0 +1,89 @@
+- node: user
+  attributes:
+    - name
+    - logon_guid
+    - logon_id
+    - session_id
+  identify_attribute: name
+- node: process
+  attributes:
+    - guid
+    - id
+    - file_path
+    - command_line
+    - file_version
+    - file_description
+    - file_product
+    - file_company
+    - file_name_original
+    - file_directory
+    - integrity_level
+    - thread_id
+    - granted_access
+    - call_trace
+  identify_attribute: guid
+- node: file
+  attributes:
+    - name
+    - creation_time
+    - previous_creation_time
+  identify_attribute: name
+- node: host
+  attributes:
+    - network_protocol
+    - network_initiated
+    - src_ip_is_ipv6
+    - src_ip_addr
+    - src_dvc_hostname
+    - src_port_number
+    - src_port_name
+    - dst_ip_is_ipv6
+    - dst_ip_addr
+    - dst_dvc_hostname
+    - dst_port_number
+    - dst_port_name
+  identify_attribute: dst_ip_addr
+- node: driver
+  attributes:
+    - loaded
+    - is_signed
+    - signature
+    - signature_status
+  identify_attribute: loaded
+- node: module
+  attributes:
+    - path
+    - file_version
+    - file_description
+    - file_product
+    - file_company
+    - file_name_original
+    - is_signed
+    - signature
+    - signature_status
+  identify_attribute: path
+- node: thread
+  attributes:
+    - thread_new_id
+    - thread_start_address
+    - thread_start_module
+    - thread_start_function
+  identify_attribute: start_module
+- node: registry
+  attributes:
+    - path
+    - value
+    - key_new_name
+  identify_attribute: path
+- node: pipe
+  attributes:
+    - name
+  identify_attribute: name
+# - node: wmi
+#   attributes:
+#   -
+- node: dns
+  attributes:
+    - response_code
+    - response_name
+  identify_attribute: response_name

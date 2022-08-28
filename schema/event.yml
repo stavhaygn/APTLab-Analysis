@@ -1,0 +1,596 @@
+- event_id: 0 #
+- event_id: 1
+  nodes:
+    - name: user
+      prefix: user
+      attributes:
+        - user_name
+        - user_logon_guid
+        - user_logon_id
+        - user_session_id
+      identify_attribute: user_name
+    - name: process_a
+      prefix: process_parent
+      attributes:
+        - process_parent_guid
+        - process_parent_id
+        - process_parent_file_path
+        - process_parent_command_line
+      identify_attribute: process_parent_guid
+    - name: process_b
+      prefix: process
+      attributes:
+        - process_guid
+        - process_id
+        - process_file_path
+        - file_version
+        - file_description
+        - file_product
+        - file_company
+        - file_name_original
+        - process_command_line
+        - process_file_directory
+        - process_integrity_level
+      identify_attribute: process_guid
+  behaviors:
+    - name: User created Process
+      source: user
+      relationship: created
+      target: process_b
+    - name: Process created Process
+      source: process_a
+      relationship: created
+      target: process_b
+  # - name: User executed Command
+  #   source: user
+  #   relationship: executed
+  #   target: command
+  # - name: Process executed Command
+  #   source: process
+  #   relationship: executed
+  #   target: command
+- event_id: 2
+  nodes:
+    - name: process
+      prefix: process
+      attributes:
+        - process_guid
+        - process_id
+        - process_file_path
+      identify_attribute: process_guid
+    - name: file
+      prefix: file
+      attributes:
+        - file_name
+        - file_creation_time
+        - file_previous_creation_time
+      identify_attribute: file_name
+  behaviors:
+    - name: Process modified File
+      source: process
+      relationship: modified
+      target: file
+- event_id: 3
+  nodes:
+    - name: process
+      prefix: process
+      attributes:
+        - process_guid
+        - process_id
+        - process_file_path
+      identify_attribute: process_guid
+    - name: user
+      prefix: user
+      attributes:
+        - user_name
+      identify_attribute: user_name
+    - name: host
+      prefix:
+      attributes:
+        - network_protocol
+        - network_initiated
+        - src_ip_is_ipv6
+        - src_ip_addr
+        - src_dvc_hostname
+        - src_port_number
+        - src_port_name
+        - dst_ip_is_ipv6
+        - dst_ip_addr
+        - dst_dvc_hostname
+        - dst_port_number
+        - dst_port_name
+      identify_attribute: dst_ip_addr
+  behaviors:
+    # - name: Process connected from Host
+    #   source: process
+    #   relationship: connected from
+    #   target: host
+    # - name: Process connected from Ip
+    #   source: process
+    #   relationship: connected from
+    #   target: ip
+    # - name: Process connected from Port
+    #   source: process
+    #   relationship: connected from
+    #   target: port
+    - name: Process connected to Host
+      source: process
+      relationship: connected to
+      target: host
+    # - name: Process connected to Ip
+    #   source: process
+    #   relationship: connected to
+    #   target: ip
+    # - name: Process connected to Port
+    #   source: process
+    #   relationship: connected to
+    #   target: port
+    # - name: User connected from Host
+    #   source: user
+    #   relationship: connected from
+    #   target: host
+    # - name: User connected from Ip
+    #   source: user
+    #   relationship: connected from
+    #   target: ip
+    # - name: User connected from Port
+    #   source: user
+    #   relationship: connected from
+    #   target: port
+    - name: User connected to Host
+      source: user
+      relationship: connected to
+      target: host
+  # - name: User connected to Ip
+  #   source: user
+  #   relationship: connected to
+  #   target: ip
+  # - name: User connected to Port
+  #   source: user
+  #   relationship: connected to
+  #   target: port
+- event_id: 4 # Sysmon service state changed
+  # behaviors:
+  # - name: Service started
+  #   source: service
+  #   relationship: started
+  #   target: None
+  # - name: Service stopped
+  #   source: service
+  #   relationship: stopped
+  #   target: None
+- event_id: 5
+  nodes:
+    - name: process
+      prefix: process
+      attributes:
+        - process_guid
+        - process_id
+        - process_file_path
+      identify_attribute: process_guid
+    - name: user
+      prefix: user
+      attributes:
+        - user_name
+      identify_attribute: user_name
+  behaviors:
+    - name: User terminated Process
+      source: user
+      relationship: terminated
+      target: process
+- event_id: 6 # Driver loaded
+  # nodes:
+  # - name: driver
+  #   prefix: driver
+  #   attributes:
+  #   - driver_loaded
+  #   - driver_is_signed
+  #   - driver_signature
+  #   - driver_signature_status
+  #   identify_attribute: driver_loaded
+  # behaviors:
+  # - name: Driver loaded
+  #   source: driver
+  #   relationship: loaded
+  #   target: None
+- event_id: 7
+  nodes:
+    - name: process
+      prefix: process
+      attributes:
+        - process_guid
+        - process_id
+        - process_file_path
+      identify_attribute: process_guid
+    - name: module
+      prefix: module
+      attributes:
+        - module_path
+        - file_version
+        - file_description
+        - file_product
+        - file_company
+        - file_name_original
+        - module_is_signed
+        - module_signature
+        - module_signature_status
+      identify_attribute: module_path
+    - name: user
+      prefix: user
+      attributes:
+        - user_name
+      identify_attribute: user_name
+  behaviors:
+    - name: Process loaded Module
+      source: process
+      relationship: loaded
+      target: module
+    - name: User loaded Module
+      source: user
+      relationship: loaded
+      target: module
+- event_id: 8
+  nodes:
+    - name: process_a
+      prefix: process
+      attributes:
+        - process_guid
+        - process_id
+        - process_file_path
+      identify_attribute: process_guid
+    - name: process_b
+      prefix: target_process
+      attributes:
+        - target_process_guid
+        - target_process_id
+        - target_process_file_path
+      identify_attribute: target_process_guid
+    - name: thread
+      prefix: thread
+      attributes:
+        - thread_new_id
+        - thread_start_address
+        - thread_start_module
+        - thread_start_function
+      identify_attribute: thread_start_module
+  behaviors:
+    - name: Process created Thread
+      source: process_b
+      relationship: created
+      target: thread
+    # - name: Process executed Api call
+    #   source: process
+    #   relationship: executed
+    #   target: api call
+    - name: Process modified Process
+      source: process_a
+      relationship: modified
+      target: process_b
+- event_id: 9 # RawAccessRead # not mapping
+- event_id: 10
+  nodes:
+    - name: process_a
+      prefix: process
+      attributes:
+        - process_guid
+        - process_id
+        - thread_id
+        - process_file_path
+        - process_granted_access
+        - process_call_trace
+      identify_attribute: process_guid
+    - name: process_b
+      prefix: target_process
+      attributes:
+        - target_process_guid
+        - target_process_id
+        - target_process_file_path
+      identify_attribute: target_process_guid
+  behaviors:
+    - name: Process accessed Process
+      source: process_a
+      relationship: accessed
+      target: process_b
+    - name: Process requested access to Process
+      source: process_a
+      relationship: requested access to
+      target: process_b
+- event_id: 11
+  nodes:
+    - name: process
+      prefix: process
+      attributes:
+        - process_guid
+        - process_id
+        - process_file_path
+      identify_attribute: process_guid
+    - name: file
+      prefix: file
+      attributes:
+        - file_name
+        - file_creation_time
+      identify_attribute: file_name
+  behaviors:
+    - name: Process created File
+      source: process
+      relationship: created
+      target: file
+    - name: Process modified File
+      source: process
+      relationship: modified
+      target: file
+- event_id: 12
+  event_type:
+    - CreateKey
+    - DeleteKey
+    - DeleteValue
+  nodes:
+    - name: process
+      prefix: process
+      attributes:
+        - process_guid
+        - process_id
+        - process_file_path
+      identify_attribute: process_guid
+    - name: registry
+      prefix: registry
+      attributes:
+        - registry_path
+      identify_attribute: registry_path
+  behaviors:
+    - name: Process created registry # TODO # need modify
+      source: process
+      relationship: created
+      target: registry
+    - name: Process deleted registry # TODO # need modify
+      source: process
+      relationship: deleted
+      target: registry
+  # - name: Process created registry key
+  #   source: process
+  #   relationship: created
+  #   target: registry key
+  # - name: Process created registry key value
+  #   source: process
+  #   relationship: created
+  #   target: registry key value
+  # - name: Process deleted registry key
+  #   source: process
+  #   relationship: deleted
+  #   target: registry key
+  # - name: Process deleted registry key value
+  #   source: process
+  #   relationship: deleted
+  #   target: registry key value
+  # - name: User created registry key
+  #   source: user
+  #   relationship: created
+  #   target: registry key
+  # - name: User created registry key value
+  #   source: user
+  #   relationship: created
+  #   target: registry key value
+  # - name: User deleted registry key
+  #   source: user
+  #   relationship: deleted
+  #   target: registry key
+- event_id: 13
+  event_type:
+    - SetValue
+  nodes:
+    - name: process
+      prefix: process
+      attributes:
+        - process_guid
+        - process_id
+        - process_file_path
+      identify_attribute: process_guid
+    - name: registry
+      prefix: registry
+      attributes:
+        - registry_path
+        - registry_value
+      identify_attribute: registry_path
+  behaviors:
+    - name: Process modified registry # TODO # need modify
+      source: process
+      relationship: modified
+      target: registry
+  # - name: Process modified registry key
+  #   source: process
+  #   relationship: modified
+  #   target: registry key
+  # - name: Process modified registry key value
+  #   source: process
+  #   relationship: modified
+  #   target: registry key value
+- event_id: 14
+  event_type:
+    - SetValue
+  nodes:
+    - name: process
+      prefix: process
+      attributes:
+        - process_guid
+        - process_id
+        - process_file_path
+      identify_attribute: process_guid
+    - name: registry
+      prefix: registry
+      attributes:
+        - registry_path
+        - registry_key_new_name
+      identify_attribute: registry_path
+  behaviors:
+    - name: Process modified registry # TODO # need modify
+      source: process
+      relationship: modified
+      target: registry
+  # - name: Process modified registry key
+  #   source: process
+  #   relationship: modified
+  #   target: registry key
+  # - name: Process modified registry key value
+  #   source: process
+  #   relationship: modified
+  #   target: registry key value
+- event_id: 15 # FileCreateStreamHash # not mapping
+- event_id: 16 # ServiceConfigurationChange # not mapping
+- event_id: 17 # PipeEvent (Pipe Created) # not mapping
+  event_type:
+    - CreatePipe
+  # nodes:
+  # - name: process
+  #   prefix: process
+  #   attributes:
+  #   - process_guid
+  #   - process_id
+  #   - process_file_path
+  #   identify_attribute: process_guid
+  # - name: pipe
+  #   prefix: pipe
+  #   attributes:
+  #   - pipe_name
+  #   identify_attribute: pipe_name
+  # behaviors:
+  # - name: process-created->pipe
+  #   source: process
+  #   relationship: created
+  #   target: pipe
+- event_id: 18 # PipeEvent (Pipe Connected) # not mapping
+  event_type:
+    - CreatePipe
+  # nodes:
+  # - name: process
+  #   prefix: process
+  #   attributes:
+  #   - process_guid
+  #   - process_id
+  #   - process_file_path
+  #   identify_attribute: process_guid
+  # - name: pipe
+  #   prefix: pipe
+  #   attributes:
+  #   - pipe_name
+  #   identify_attribute: pipe_name
+  # behaviors:
+  # - name: process-connected_to->pipe
+  #   source: process
+  #   relationship: connected_to
+  #   target: pipe
+- event_id: 19 # WmiEvent (WmiEventFilter activity detected)
+  event_type:
+    - WmiFilterEvent
+  # nodes:
+  # - name: user
+  #   prefix: user
+  #   attributes:
+  #   - user_name
+  #   identify_attribute: user_name
+  # - name: wmi
+  #   prefix: wmi
+  #   attributes:
+  #   - wmi_operation
+  #   - wmi_namespace
+  #   - wmi_filter_name
+  #   - wmi_query
+  #   identify_attribute:
+  # behaviors:
+  # - name: User created Wmi object
+  #   source: user
+  #   relationship: created
+  #   target: wmi
+- event_id: 20 # WmiEvent (WmiEventConsumer activity detected)
+  event_type:
+    - WmiConsumerEvent
+  # nodes:
+  # - name: user
+  #   prefix: user
+  #   attributes:
+  #   - user_name
+  #   identify_attribute: user_name
+  # - name: wmi
+  #   prefix: wmi
+  #   attributes:
+  #   - wmi_operation
+  #   - wmi_consumer_name
+  #   - wmi_consumer_type
+  #   - wmi_consumer_destination
+  #   identify_attribute:
+  # behaviors:
+  # - name: User created Wmi object
+  #   source: user
+  #   relationship: created
+  #   target: wmi
+- event_id: 21 # WmiEvent (WmiEventConsumerToFilter activity detected)
+  event_type:
+    - WmiBindingEvent
+  # nodes:
+  # - name: user
+  #   prefix: user
+  #   attributes:
+  #   - user_name
+  #   identify_attribute: user_name
+  # - name: wmi
+  #   prefix: wmi
+  #   attributes:
+  #   - wmi_operation
+  #   - wmi_consumer_path
+  #   - wmi_filter_path
+  #   identify_attribute:
+  # behaviors:
+  # - name: User created Wmi object
+  #   source: user
+  #   relationship: created
+  #   target: wmi
+- event_id: 22 # DNSEvent (DNS query)
+  nodes:
+    - name: process
+      prefix: process
+      attributes:
+        - process_guid
+        - process_id
+        - process_file_path
+      identify_attribute: process_guid
+    - name: dns
+      prefix: dns
+      attributes:
+        - dns_response_code
+        - dns_response_name
+      identify_attribute: dns_response_name
+  behaviors:
+    - name: Process queried DNS
+      source: process
+      relationship: queried
+      target: dns
+- event_id: 23 # FileDelete (File Delete archived)
+  nodes:
+    - name: process
+      prefix: process
+      attributes:
+        - process_guid
+        - process_id
+        - process_file_path
+      identify_attribute: process_guid
+    - name: user
+      prefix: user
+      attributes:
+        - user_name
+      identify_attribute: user_name
+    - name: file
+      prefix: file
+      attributes:
+        - file_name
+      identify_attribute: file_name
+  behaviors:
+    - name: Process deleted File
+      source: process
+      relationship: deleted
+      target: file
+    - name: User deleted File
+      source: user
+      relationship: deleted
+      target: file
+- event_id: 24
+- event_id: 25
+- event_id: 26

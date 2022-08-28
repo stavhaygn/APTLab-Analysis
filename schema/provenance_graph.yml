@@ -1,0 +1,206 @@
+nodes:
+  # user:
+  #   identity_column: userId
+  #   encoders:
+  #     name: SequenceEncoder
+  
+  process:
+    identity_column: processId
+    encoders:
+      file_path: SequenceEncoder
+      command_line: SequenceEncoder
+      file_name_original: SequenceEncoder
+      file_directory: SequenceEncoder
+      call_trace: SequenceEncoder
+      
+  file:
+    identity_column: fileId
+    encoders:
+      name: SequenceEncoder
+
+  host:
+    identity_column: hostId
+    encoders:
+      dst_ip_addr: SequenceEncoder
+      dst_port_number: SequenceEncoder
+
+  # driver:
+  #   identity_column: driverId
+  #   encoders:
+
+  module:
+    identity_column: moduleId
+    encoders:
+      path: SequenceEncoder
+      # file_product: SequenceEncoder
+      # file_company: SequenceEncoder
+      # file_description: SequenceEncoder
+      file_name_original: SequenceEncoder
+
+  # thread:
+  #   identity_column: threadId
+  #   encoders:
+
+  registry:
+    identity_column: registryId
+    encoders:
+      path: SequenceEncoder
+      # path: DistiluseSequenceEncoder
+      # value: SequenceEncoder
+
+  # pipe:
+  #   identity_column: pipeId
+  #   encoders:
+
+  # dns:
+  #   identity_column: dnsId
+  #   encoders:
+
+edges:
+  user-created-process:
+    source_node_type: user
+    edge_type: created
+    destination_node_type: process
+    encoders:
+      rule_technique_id: AttackTechniqueClassEncoder
+
+  process-created-process:
+    source_node_type: process
+    edge_type: created
+    destination_node_type: process
+    src_identity_column: srcProcessId
+    dst_identity_column: dstProcessId
+    encoders:
+      rule_technique_id: AttackTechniqueClassEncoder
+
+  process-modified-file:
+    source_node_type: process
+    edge_type: modified
+    destination_node_type: file
+    encoders:
+      rule_technique_id: AttackTechniqueClassEncoder
+
+  process-connected_to-host:
+    source_node_type: process
+    edge_type: connected to
+    destination_node_type: host
+    encoders:
+      rule_technique_id: AttackTechniqueClassEncoder
+
+  user-connected_to-host:
+    source_node_type: user
+    edge_type: connected to
+    destination_node_type: host
+    encoders:
+      rule_technique_id: AttackTechniqueClassEncoder
+
+  user-terminated-process:
+    source_node_type: user
+    edge_type: terminated
+    destination_node_type: process
+    encoders:
+      rule_technique_id: AttackTechniqueClassEncoder
+
+  driver-loaded-None:
+    source_node_type: driver
+    edge_type: loaded
+    destination_node_type: None
+    encoders:
+      rule_technique_id: AttackTechniqueClassEncoder
+
+  process-loaded-module:
+    source_node_type: process
+    edge_type: loaded
+    destination_node_type: module
+    encoders:
+      rule_technique_id: AttackTechniqueClassEncoder
+
+  user-loaded-module:
+    source_node_type: user
+    edge_type: loaded
+    destination_node_type: module
+    encoders:
+      rule_technique_id: AttackTechniqueClassEncoder
+
+  process-created-thread:
+    source_node_type: process
+    edge_type: created
+    destination_node_type: thread
+    encoders:
+      rule_technique_id: AttackTechniqueClassEncoder
+
+  process-modified-process:
+    source_node_type: process
+    edge_type: modified
+    destination_node_type: process
+    src_identity_column: srcProcessId
+    dst_identity_column: dstProcessId
+    encoders:
+      rule_technique_id: AttackTechniqueClassEncoder
+
+  process-accessed-process:
+    source_node_type: process
+    edge_type: accessed
+    destination_node_type: process
+    src_identity_column: srcProcessId
+    dst_identity_column: dstProcessId
+    encoders:
+      rule_technique_id: AttackTechniqueClassEncoder
+
+  process-requested_access_to-process:
+    source_node_type: process
+    edge_type: requested access to
+    destination_node_type: process
+    src_identity_column: srcProcessId
+    dst_identity_column: dstProcessId
+    encoders:
+      rule_technique_id: AttackTechniqueClassEncoder
+
+  process-created-file:
+    source_node_type: process
+    edge_type: created
+    destination_node_type: file
+    encoders:
+      rule_technique_id: AttackTechniqueClassEncoder
+
+  process-created-registry:
+    source_node_type: process
+    edge_type: created
+    destination_node_type: registry
+    encoders:
+      rule_technique_id: AttackTechniqueClassEncoder
+  
+  process-deleted-registry:
+    source_node_type: process
+    edge_type: deleted
+    destination_node_type: registry
+    encoders:
+      rule_technique_id: AttackTechniqueClassEncoder
+    
+  process-modified-registry:
+    source_node_type: process
+    edge_type: modified
+    destination_node_type: registry
+    encoders:
+      rule_technique_id: AttackTechniqueClassEncoder
+
+  process-queried-dns:
+    source_node_type: process
+    edge_type: queried
+    destination_node_type: dns
+    encoders:
+      rule_technique_id: AttackTechniqueClassEncoder
+
+  process-deleted-file:
+    source_node_type: process
+    edge_type: deleted
+    destination_node_type: file
+    encoders:
+      rule_technique_id: AttackTechniqueClassEncoder
+      
+  user-deleted-file:
+    source_node_type: user
+    edge_type: deleted
+    destination_node_type: file
+    encoders:
+      rule_technique_id: AttackTechniqueClassEncoder
