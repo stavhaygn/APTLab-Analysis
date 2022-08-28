@@ -1,6 +1,5 @@
 import torch
 from aptlab_analysis.dataset.utils import (
-    load_provenance_graph_schema,
     load_node_csv,
     load_edge_csv,
 )
@@ -18,7 +17,7 @@ def test_load_node_csv():
     }
 
     node_x, node_identity_mapping = load_node_csv(
-        node_csv_path="csv/test/process.csv",
+        node_csv_path="csv/dataset/test/process.csv",
         identity_column="processId",
         column_encoder_mapping=column_encoder_mapping,
     )
@@ -34,7 +33,7 @@ def test_load_edge_csv():
     column_encoder_mapping = {"rule_technique_id": ClassEncoder(technique_id_mapping)}
 
     edge_index, edge_attr = load_edge_csv(
-        edge_csv_path="csv/test/process_loaded_module.csv",
+        edge_csv_path="csv/dataset/test/process_loaded_module.csv",
         src_node_identity_column="processId",
         src_node_identity_mapping=process_identity_mapping,
         dst_node_identity_column="moduleId",

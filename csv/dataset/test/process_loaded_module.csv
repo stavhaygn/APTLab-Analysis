@@ -1,0 +1,3 @@
+processId,moduleId,event_id,rule_technique_id,rule_technique_name,event_creation_time
+57,412,7,T1047,Windows Management Instrumentation,2021-12-07T00:33:27.279000000
+43,412,7,T1047,Windows Management Instrumentation,2021-12-07T00:25:06.993000000

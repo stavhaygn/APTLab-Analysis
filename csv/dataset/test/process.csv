@@ -1,0 +1,3 @@
+processId,guid,id,file_path,command_line,file_version,file_description,file_product,file_company,file_name_original,file_directory,integrity_level,thread_id,granted_access,call_trace
+43,2665bb79-a9e2-61ae-6800-000000001000,2916,c:\windows\system32\wbem\wmiprvse.exe,c:\windows\system32\wbem\wmiprvse.exe -embedding,10.0.18362.1 (WinBuild.160101.0800),WMI Provider Host,Microsoft® Windows® Operating System,Microsoft Corporation,Wmiprvse.exe,c:\windows\system32\,System,,,
+57,2665bb79-abd7-61ae-e000-000000001000,2204,c:\windows\system32\gpresult.exe,"""c:\windows\system32\gpresult.exe"" /r",10.0.18362.1 (WinBuild.160101.0800),Query Group Policy RSOP Data,Microsoft® Windows® Operating System,Microsoft Corporation,gprslt.exe,c:\users\vagrant\,High,,,
