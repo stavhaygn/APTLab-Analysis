@@ -11,10 +11,8 @@ class ClassEncoder(Encoder):
         self.has_None_class = has_None_class
 
     def __call__(self, values: ndarray) -> Tensor:
-        offset = 1 if self.has_None_class else 0
+        offset = 0
         class_count = len(self.mapping)
-        if self.has_None_class:
-            class_count += 1
 
         x = torch.zeros(len(values), class_count, dtype=torch.long)
         for i, column in enumerate(values.astype(str)):

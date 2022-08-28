@@ -27,7 +27,7 @@ def test_class_encoder():
 
 
 def test_class_encoder_has_none_class():
-    mapping = {"T1016": 0, "T1033": 1, "T1047": 2, "T1053": 3}
+    mapping = {"nan": 0, "T1016": 1, "T1033": 2, "T1047": 3, "T1053": 4}
     values = np.array(
         ["T1047", "T1016", "T1033", "T1033", "T1053", "nan"], dtype=object
     )
